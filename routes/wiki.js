@@ -12,15 +12,15 @@ router.get('/', function(req, res, next){
 
 router.post('/', function (req, res, next) {
 
-  var page = models.Page.build({
-    title:  req.body.title,
-    content: req.body.content,
-    status: req.body.status
-});
+    var page = models.Page.build({
+        title:  req.body.title,
+        content: req.body.content,
+        status: req.body.status,
+    });
 
-page.save().then(function(){
-    res.redirect('/');
-
+    page.save()
+    .then(function(newPage){
+        res.redirect(newPage.get('route'));
 });
 
 });

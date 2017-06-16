@@ -22,18 +22,11 @@ var User = db.define('user', {
 var Page = db.define('page', {
     title: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
     },
     urlTitle: {
         type: Sequelize.STRING,
-        allowNull: true,
-        get: function(){
-            var title = this.getDataValue('title');
-            return this.getDataValue('/wiki/') + title;
-        },
-        validate: {
-            isURL: true
-        }
+        allowNull: true
     },
     content: {
         type: Sequelize.TEXT,
@@ -41,6 +34,22 @@ var Page = db.define('page', {
     },
     status: {
         type: Sequelize.ENUM('open', 'closed')
+    }
+}, {
+    hooks: {
+        beforeValidate: function(page){
+            if (page.title) {
+                page.urlTitle = page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+            } else {
+                page.urlTitle = Math.random().toString(36).substring(2, 7);
+            }
+
+        }
+    },
+    getterMethods: {
+        route: function(){
+            return '/wiki/' + this.getDataValue('urlTitle');
+    }
     }
 });
 
