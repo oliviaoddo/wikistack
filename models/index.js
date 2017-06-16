@@ -26,7 +26,7 @@ var Page = db.define('page', {
     },
     urlTitle: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
         get: function(){
             var title = this.getDataValue('title');
             return this.getDataValue('/wiki/') + title;

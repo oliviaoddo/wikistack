@@ -2,19 +2,32 @@
 
 var express = require('express');
 var router = express.Router();
+var models = require('../models');
 
 router.get('/', function(req, res, next){
-  res.send("got to GET /wiki");
+
+  res.render('index');
 
 });
 
 router.post('/', function (req, res, next) {
-  res.send("got to POST /wiki");
+
+  var page = models.Page.build({
+    title:  req.body.title,
+    content: req.body.content,
+    status: req.body.status
+});
+
+page.save().then(function(){
+    res.redirect('/');
+
+});
 
 });
 
 router.get('/add', function (req, res, next) {
-  res.send("got to GET /wiki/add");
+
+  res.render('addpage');
 
 });
 
