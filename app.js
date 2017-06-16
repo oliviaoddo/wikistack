@@ -32,11 +32,7 @@ models.db.sync({force: false})
 })
 .catch(console.error);
 
-
-
-
-
 app.use(express.static(path.join(__dirname, '/public')));
 
 // modular routing that uses io inside it
-// app.use('/', makesRouter);
+app.use('/', makesRouter);
