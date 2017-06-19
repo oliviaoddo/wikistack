@@ -15,7 +15,7 @@ router.get('/', function(req, res, next){
 
 
 router.use('/wiki', wikiRouter);
-
+router.use('/users', userRouter);
 
 
 
